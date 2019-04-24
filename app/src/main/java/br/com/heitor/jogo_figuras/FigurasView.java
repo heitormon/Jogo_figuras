@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
+import android.graphics.RectF;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -29,16 +30,19 @@ public class FigurasView extends View {
         int x = getWidth();
         int y = getHeight();
         int raio=100;
+        Random random = new Random ();
+        int a = random.nextInt(156)+100;
+        int r = random.nextInt(156)+100;
+        int g = random.nextInt(156)+100;
+        int b = random.nextInt(156)+100;
+
         Ponteiros = gerarPosições();
-//        Point posição1 = new Point(x/4,2*y/4);
-//        Point posição2 = new Point(x/4,3*y/4);
-//        Point posição3 = new Point(3*x/4,2*y/4);
-//        Point posição4 = new Point(3*x/4,3*y/4);
+
 
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(Color.WHITE);
         canvas.drawPaint(paint);
-        paint.setColor(Color.parseColor("#da4747"));
+        paint.setColor(Color.argb(a, r, g, b));
         //Circulo
         canvas.drawCircle(Ponteiros.get(0).x,Ponteiros.get(0).y,raio,paint);
 
@@ -47,16 +51,16 @@ public class FigurasView extends View {
 
         //Triangulo
        // canvas.drawCircle(3*x/4,2*y/4,raio,paint);
-        Point a = new Point(Ponteiros.get(2).x, (Ponteiros.get(2).y)-raio);
-        Point b = new Point(raio+Ponteiros.get(2).x, raio+Ponteiros.get(2).y);
-        Point c = new Point((Ponteiros.get(2).x)-raio, raio+Ponteiros.get(2).y);
+        Point a1 = new Point(Ponteiros.get(2).x, (Ponteiros.get(2).y)-raio);
+        Point b2 = new Point(raio+Ponteiros.get(2).x, raio+Ponteiros.get(2).y);
+        Point c3 = new Point((Ponteiros.get(2).x)-raio, raio+Ponteiros.get(2).y);
 
 //        path.setFillType(Path.FillType.EVEN_ODD);
 
-        path.lineTo(a.x, a.y);
-        path.lineTo(b.x, b.y);
-        path.lineTo(c.x, c.y);
-        path.lineTo(a.x, a.y);
+        path.lineTo(a1.x, a1.y);
+        path.lineTo(b2.x, b2.y);
+        path.lineTo(c3.x, c3.y);
+        path.lineTo(a1.x, a1.y);
         path.close();
 
         canvas.drawPath(path, paint);
@@ -66,6 +70,12 @@ public class FigurasView extends View {
 
     }
 
+
+
+
+    public boolean isCirculo(MotionEvent event, RectF bounds, int raio){
+        return true;
+    }
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         return super.onTouchEvent(event);
