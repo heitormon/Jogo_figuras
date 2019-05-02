@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.RectF;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
@@ -28,10 +29,10 @@ public class FigurasView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
             Paint paint = new Paint();
-            if(telaCriada==false) {
+
                 ponteiro = gerarPosições();
                 telaCriada = true;
-            }
+
             gerarFiguras(canvas, paint, ponteiro);
 
     }
@@ -97,7 +98,41 @@ public class FigurasView extends View {
         //Retangulo
 
         canvas.drawRect((Ponteiros.get(3).x)-raio/2,(Ponteiros.get(3).y)-raio,raio/2+Ponteiros.get(3).x,raio+Ponteiros.get(3).y,paint);
-    }
 
+
+    }
+    @Override
+    public boolean onTouchEvent(final MotionEvent event ) {
+        Canvas canvas = new Canvas();
+
+
+
+        final float x = event.getX();
+        final float y = event.getY();
+
+        switch (event.getAction()) {
+
+            case MotionEvent.ACTION_DOWN:
+                Log.i("ON TOUCH EVENT", "DOWN + X: " + x + " Y " + y);
+
+                if (y >= 700){
+                    telaCriada=false;
+                    draw(canvas);
+                    postInvalidate();
+
+
+
+                }
+
+                break;
+
+            default:
+                break;
+        }
+
+        return super.onTouchEvent(event);
+
+
+    }
 
 }
