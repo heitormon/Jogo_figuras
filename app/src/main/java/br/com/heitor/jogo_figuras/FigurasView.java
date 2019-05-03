@@ -21,6 +21,7 @@ import java.util.Random;
 public class FigurasView extends View {
     private boolean telaCriada=false;
     private ArrayList<Point> ponteiro = new ArrayList<>();
+
     public FigurasView(Context context){
         super(context);
     }
@@ -29,10 +30,10 @@ public class FigurasView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
             Paint paint = new Paint();
-
+            if(!telaCriada) {
                 ponteiro = gerarPosições();
                 telaCriada = true;
-
+            }
             gerarFiguras(canvas, paint, ponteiro);
 
     }
@@ -115,7 +116,7 @@ public class FigurasView extends View {
             case MotionEvent.ACTION_DOWN:
                 Log.i("ON TOUCH EVENT", "DOWN + X: " + x + " Y " + y);
 
-                if (y >= 700){
+                if ((y <= ponteiro.get(0).y+100 && x<=ponteiro.get(0).x+100)&&(y <= ponteiro.get(0).y-100 && x<=ponteiro.get(0).x-100)){
                     telaCriada=false;
                     draw(canvas);
                     postInvalidate();
